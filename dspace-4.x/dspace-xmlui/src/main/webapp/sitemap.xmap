@@ -65,6 +65,7 @@
                             <encoding>UTF-8</encoding>
                             <indent>yes</indent>
                         </map:serializer>
+			<map:serializer name="zip" mime-type="application/zip" src="org.apache.cocoon.serialization.ZipArchiveSerializer"/>
                 </map:serializers>
                 <map:transformers default="xslt">
                         <map:transformer logger="sitemap.transformer.xslt" name="xslt" pool-max="32"
@@ -377,6 +378,15 @@
                         <!--
                                 Downloads for the package download export
                         -->
+			<!-- DNB transfer: generate zip archive with all docs per publication by handle -->
+			<map:match pattern="download/*/*-files.zip">
+                                <map:generate type="DSpaceMETSGenerator">
+                                        <map:parameter name="handle" value="{1}/{2}"/>
+                                </map:generate>
+                                <map:transform src="ziparchive.xsl"/>   
+                                <map:serialize type="zip"/>     
+                        </map:match>
+			
                         <map:match pattern="exportdownload/*">
                                 <map:read type="ExportReader">
                                         <map:parameter name="fileName" value="{1}"/>
