@@ -15,6 +15,8 @@
 
 	<Contexts>
 		<Context baseurl="request">
+			<Format refid="xmetadissplus" />
+                        <Format refid="epicur" />
 			<Format refid="oaidc" />
 			<Format refid="mets" />
 			<Format refid="xoai" />
@@ -87,6 +89,18 @@
 	
 	
 	<Formats>
+                <Format id="xmetadissplus">
+                        <Prefix>xMetaDissPlus</Prefix>
+                        <XSLT>metadataFormats/xMetaDissPlus.xsl</XSLT>
+                        <Namespace>urn:nbn:de:1111-2004033116</Namespace>
+                        <SchemaLocation>http://www.persistent-identifier.de/xepicur/version1.0/xepicur.xsd</SchemaLocation>
+                </Format>
+                <Format id="epicur">
+                        <Prefix>epicur</Prefix>
+                        <XSLT>metadataFormats/epicur.xsl</XSLT>
+                        <Namespace>http://www.d-nb.de/standards/xmetadissplus/</Namespace>
+                        <SchemaLocation>http://files.dnb.de/standards/xmetadissplus/xmetadissplus.xsd</SchemaLocation>
+                </Format>
 		<Format id="oaidc">
 			<Prefix>oai_dc</Prefix>
 			<XSLT>metadataFormats/oai_dc.xsl</XSLT>
