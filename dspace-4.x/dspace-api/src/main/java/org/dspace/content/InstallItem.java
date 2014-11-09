@@ -20,7 +20,6 @@ import org.dspace.identifier.IdentifierService;
 import org.dspace.utils.DSpace;
 
 import org.dspace.core.ConfigurationManager;
-
 /**
  * Support to install an Item in the archive.
  * 
@@ -206,10 +205,10 @@ public class InstallItem
         // Add provenance description
         item.addDC("description", "provenance", "en", provDescription);
 
-	// create URN Checksum and add URN 
+	//Crate URN and add to metadata
 	String prefix = ConfigurationManager.getProperty("urn.prefix");
-	String handle = item.getHandle();
-	item.addDC("identifier", "urn", null, prefix + handle + "-" + URNChecksum(item, handle));
+	String urn = prefix + item.getHandle() + '-';
+	item.addDC("identifier", "urn", null, urn + URNChecksum(urn));
     }
 
     // final housekeeping when adding new Item to archive
@@ -276,19 +275,17 @@ public class InstallItem
         return myMessage.toString();
     }
 
-    private static String URNChecksum(Item item, String handle)
-        throws SQLException, IOException, AuthorizeException
+    private static String URNChecksum(String uurn)
     {
-                 String prefix = ConfigurationManager.getProperty("urn.prefix").toUpperCase();
+		 String urn = uurn.toUpperCase();
                  int[] Nums={1,2,3,4,5,6,7,8,9,41,18,14,19,15,16,21,22,23,24,25,
                              42,26,27,13,28,29,31,12,32,33,11,34,35,36,37,38,39,17,47,43,45,49};
 
                  String Zeichen="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-:._/+";
                  int erg=0;
                  StringBuffer sb= new StringBuffer();
-                 String urn= prefix + handle + "-";
-                 log.debug("URNChecksum von " + urn);
-                 for(int i=0;i<urn.length();i++)
+
+                 for(int i=0; i < urn.length(); i++)
                     sb.append(Nums[Zeichen.indexOf(urn.charAt(i))]);
 
                 for(int i=0;i<sb.length();i++)
